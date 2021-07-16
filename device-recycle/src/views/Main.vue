@@ -4,7 +4,7 @@
       <main-input
         class="main-container-input"
         type="text"
-        title="设备号啊"
+        title="设备号"
         @onInput="onDeviceNOInput"
       ></main-input>
       <main-input
