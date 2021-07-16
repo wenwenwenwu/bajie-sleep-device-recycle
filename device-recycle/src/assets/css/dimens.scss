@@ -1,0 +1,5 @@
+$iphone6FontSize: 375 / 10;
+
+@function rem($px) {
+    @return $px / $iphone6FontSize+rem;
+}
