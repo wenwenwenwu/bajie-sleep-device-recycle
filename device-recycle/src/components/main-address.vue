@@ -3,7 +3,7 @@
     <p class="main-address-title">{{ title }}</p>
     <p
       class="main-address-info"
-      :class="[address == '选择区域' ? 'light-gray' : 'dark-gray']"
+      :class="[address == '请选择区域' ? 'light-gray' : 'dark-gray']"
       @click="onAddressClick"
     >
       {{ address }}
