@@ -1,4 +1,7 @@
 window.ALERT_INFO = {
-    emptyInfo: "信息不能为空",
-    errorTelephone: "手机号码不正确"
+    infoEmpty: "信息不能为空",
+    telephoneError: "手机号码不正确",
+    serverError: "服务器出错"
 }
+
+window.BASE_URL = "https://cloud.bajiesleep.com/express/hospital"

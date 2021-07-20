@@ -1,31 +1,15 @@
 import Vue from "vue";
-import Router from "../../router/index";
-import Store from "../../store/index";
 import axios from "axios";
-import { CacheTool } from "@js/cache-tool.js";
-import { Loading } from "element-ui";
+import { Toast } from "vant";
 
 axios.defaults.baseURL = BASE_URL;
-
-var loading = null;
 
 // interceptors是拦截器
 // 所有的request，都会先进入该方法
 axios.interceptors.request.use(config => {
-  loading = Loading.service({
-    background: "rgba(0,0,0,0.1)"
-  });
-  const loginInfo = CacheTool.getLoginInfo();
-  if (loginInfo) {
-    if (config.headers) {
-      config.headers.token = loginInfo.token;
-      config.headers.uid = loginInfo.uid;
-    } else {
-      config.headers = {
-        token: loginInfo.token,
-        uid: loginInfo.uid,
-      };
-    }
+  Toast.loading()
+  config.headers = {
+    "Access-Control-Allow-Origin":"*"
   }
   return config;
 });
@@ -33,28 +17,19 @@ axios.interceptors.request.use(config => {
 //所有的response，都会先进入该方法
 axios.interceptors.response.use(
   response => {
-    loading.close();
-    const code = response.data.code;
+    Toast.clear();
+    const code = response.data.status;
     switch (code) {
-      case 0:
+      case 200:
         return Promise.resolve(response.data.data);
-      case 10010:
-      case 10004:
-        CacheTool.removeLoginInfo();
-        Store.commit("removeAccountInfo");
-        Store.commit("saveIsMainLeftSlim", false);
-        Store.commit("saveSelectedModuleIndex", 0);
-        Store.commit("saveSelectedHospitalIndex", 0);
-        Router.push({ path: "/login" });
       default:
-        const errorMSG = getWebErrorMsg(response.data);
-        return Promise.reject(errorMSG);
+        return Promise.reject(response.data.message);
     }
   },
   error => {
-    loading.close();
+    Toast.clear();
     if (error.response) {
-      return Promise.reject(getWebErrorMsg(error.response.data));
+      return Promise.reject(error.response.data);
     } else {
       return Promise.reject(MSG.serverError);
     }

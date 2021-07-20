@@ -1,7 +1,7 @@
 <template>
   <div class="main-input">
     <p class="main-input-title">{{ title }}</p>
-    <input
+    <input class="main-input-input"
       type="text"
       :placeholder="placeholder"
       v-model="value"
@@ -55,7 +55,7 @@ export default {
     width: rem(60);
   }
 
-  input {
+  &-input {
     color: #666666;
     background-color: white;
     border: rem(1) solid #d9d9d9;

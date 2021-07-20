@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 
 import "@js/constant.js";
+import "@js/http.js";
 import "@css/style.scss";
 import "@js/htmlFontSize.js";
 

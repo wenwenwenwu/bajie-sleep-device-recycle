@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <div class="main-container">
+      <p class="main-container-hospital">郴州市第一人民医院</p>
       <main-input
         class="main-container-input"
         type="text"
@@ -25,7 +26,7 @@
         :addressArrary="addressArrary"
         @onAddressClick="onAddressClick"
       ></main-address>
-      <textarea placeholder="请输入详细地址" v-model="detailAddress"></textarea>
+      <textarea class="main-container-textArea" placeholder="请输入详细地址" v-model="detailAddress"></textarea>
       <button class="main-container-submit" @click="onSubmit">提 交</button>
       <van-popup v-model="showPicker" round position="bottom">
         <van-area
@@ -41,7 +42,7 @@
 <script>
 import MainInput from "@c/main-input.vue";
 import MainAddress from "@c/main-address.vue";
-import ValidateTool from "@js/validateTool.js";
+import CommonTool from "@js/commonTool.js";
 
 export default {
   components: {
@@ -51,6 +52,7 @@ export default {
 
   data() {
     return {
+      hospitalID: "",
       deviceNO: "",
       name: "",
       telephone: "",
@@ -62,7 +64,8 @@ export default {
   },
 
   created() {
-    console.log(this.areaList);
+    this.hospitalID = CommonTool.getURLData().id;
+    this.hospitalInfoRequest();
   },
 
   methods: {
@@ -92,17 +95,28 @@ export default {
         !this.addressArrary ||
         !this.detailAddress
       ) {
-        this.$toast(ALERT_INFO.emptyInfo);
+        this.$toast(ALERT_INFO.infoEmpty);
         return;
       }
-      if (!ValidateTool.isPhoneNumber(this.telephone)) {
-        this.$toast(ALERT_INFO.errorTelephone);
+      if (!CommonTool.isPhoneNumber(this.telephone)) {
+        this.$toast(ALERT_INFO.TelephoneError);
         return;
       }
 
       console.log(
         `deviceNO:${this.deviceNO};name:${this.name};telephone:${this.telephone};addressArray:${this.addressArrary};detailAddress:${this.detailAddress}`
       );
+    },
+    hospitalInfoRequest() {
+      const uri = this.hospitalID;
+      this.$http
+        .post(uri)
+        .then((response) => {
+          console.log(response.name);
+        })
+        .catch((error) => {
+          this.$toast(error);
+        });
     },
   },
 };
@@ -125,7 +139,14 @@ export default {
     display: flex;
     flex-direction: column;
 
-    textArea {
+    &-hospital {
+      color: #212773;
+      font-size: rem(23);
+      text-align: center;
+      margin-bottom: rem(30);
+    }
+
+    &-textArea {
       color: #666666;
       font-size: rem(16);
       resize: none;
@@ -149,10 +170,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    vanField {
-      font-size: rem(16);
     }
   }
 }
