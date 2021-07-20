@@ -28,9 +28,8 @@
       <textarea placeholder="请输入详细地址" v-model="detailAddress"></textarea>
       <button class="main-container-submit" @click="onSubmit">提 交</button>
       <van-popup v-model="showPicker" round position="bottom">
-        <van-picker
-          show-toolbar
-          :columns="columns"
+        <van-area
+          :area-list="areaList"
           @cancel="showPicker = false"
           @confirm="onConfirm"
         />
@@ -42,7 +41,7 @@
 <script>
 import MainInput from "@c/main-input.vue";
 import MainAddress from "@c/main-address.vue";
-import AreaData from "../assets/areaData.json";
+import ValidateTool from "@js/validateTool.js";
 
 export default {
   components: {
@@ -56,16 +55,14 @@ export default {
       name: "",
       telephone: "",
       detailAddress: "",
-      areaDataArray: [],
-
       addressArrary: [],
       showPicker: false,
-      columns: [],
+      areaList: AREA_LIST,
     };
   },
 
   created() {
-    this.columns = AreaData;
+    console.log(this.areaList);
   },
 
   methods: {
@@ -82,12 +79,29 @@ export default {
       this.showPicker = true;
     },
     onConfirm(value) {
-      this.addressArrary = value;
+      this.addressArrary = value.map((item) => {
+        return item.name;
+      });
       this.showPicker = false;
     },
     onSubmit() {
+      if (
+        !this.deviceNO ||
+        !this.name ||
+        !this.telephone ||
+        !this.addressArrary ||
+        !this.detailAddress
+      ) {
+        this.$toast(ALERT_INFO.emptyInfo);
+        return;
+      }
+      if (!ValidateTool.isPhoneNumber(this.telephone)) {
+        this.$toast(ALERT_INFO.errorTelephone);
+        return;
+      }
+
       console.log(
-        `deviceNO:${this.deviceNO};name:${this.name};telephone:${this.telephone};detailAddress:${this.detailAddress}`
+        `deviceNO:${this.deviceNO};name:${this.name};telephone:${this.telephone};addressArray:${this.addressArrary};detailAddress:${this.detailAddress}`
       );
     },
   },

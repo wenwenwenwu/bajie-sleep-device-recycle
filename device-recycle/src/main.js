@@ -3,17 +3,22 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import "@js/constant.js";
 import "@css/style.scss";
 import "@js/htmlFontSize.js";
 
-import Picker from "vant";
-import Popup from "vant";
-
-import "vant/lib/picker/style";
+//Vant组件
+import { Popup } from "vant";
+import { Area } from 'vant';
+import { Toast } from 'vant';
 import "vant/lib/popup/style";
-
-Vue.use(Picker);
-Vue.use(Popup);
+import "vant/lib/area/style";
+import "vant/lib/toast/style";
+import { areaList } from "@vant/area-data";
+Vue.use(Popup)
+Vue.use(Area)
+Vue.use(Toast)
+window.AREA_LIST = areaList
 
 Vue.config.productionTip = false;
 
