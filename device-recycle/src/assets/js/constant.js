@@ -4,4 +4,4 @@ window.ALERT_INFO = {
     serverError: "服务器出错"
 }
 
-window.BASE_URL = "https://cloud.bajiesleep.com/express/hospital"
+window.BASE_URL = "https://cloud.bajiesleed.com/"

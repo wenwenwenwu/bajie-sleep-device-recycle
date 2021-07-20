@@ -1,38 +1,16 @@
 <template>
-  <div class="main-input">
-    <p class="main-input-title">{{ title }}</p>
-    <input class="main-input-input"
-      type="text"
-      :placeholder="placeholder"
-      v-model="value"
-      @input="onInput"
-    />
+  <div class="main-hospital">
+    <p class="main-hospital-title">寄送至</p>
+    <p class="main-hospital-info">
+      {{ hospitalName }}
+    </p>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    type: String,
-    title: String,
-  },
-
-  data: function () {
-    return {
-      value: "",
-    };
-  },
-
-  computed: {
-    placeholder() {
-      return `请输入${this.title}`;
-    },
-  },
-
-  methods: {
-    onInput: function () {
-      this.$emit("onInput", this.value);
-    },
+    hospitalName: String,
   },
 };
 </script>
@@ -40,9 +18,9 @@ export default {
 <style lang="scss" scoped>
 @import "@css/style.scss";
 
-.main-input {
+.main-hospital {
   width: 100%;
-  height: rem(40);
+  height: rem(44);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -55,16 +33,17 @@ export default {
     width: rem(60);
   }
 
-  &-input {
+  &-info {
     color: #666666;
     background-color: white;
     border: rem(1) solid #d9d9d9;
     border-radius: rem(3);
-    outline: none;
     font-size: rem(16);
     box-sizing: border-box;
     padding: rem(5) rem(10);
     flex: 1;
+    display: flex;
+    align-items: center;
     height: 100%;
     margin-left: rem(9);
   }

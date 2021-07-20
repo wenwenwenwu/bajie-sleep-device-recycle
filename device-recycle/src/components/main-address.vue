@@ -68,11 +68,12 @@ export default {
 
   &-info {
     background-color: white;
+    line-height: rem(21);
     border: rem(1) solid #d9d9d9;
     border-radius: rem(3);
     font-size: rem(16);
     box-sizing: border-box;
-    padding: rem(5);
+    padding: rem(5) rem(10);
     flex: 1;
     display: flex;
     align-items: center;

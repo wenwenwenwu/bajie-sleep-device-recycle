@@ -1,6 +1,9 @@
 const path = require("path");
 const { resolve } = require("path");
 module.exports = {
+  devServer: {
+    proxy: 'https://cloud.bajiesleep.com/'
+  },
   configureWebpack: config => {
     if (process.env.NODE_ENV === "production") {
       // 为生产环境修改配置...

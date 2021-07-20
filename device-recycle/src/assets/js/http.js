@@ -9,7 +9,8 @@ axios.defaults.baseURL = BASE_URL;
 axios.interceptors.request.use(config => {
   Toast.loading()
   config.headers = {
-    "Access-Control-Allow-Origin":"*"
+    "Access-Control-Allow-Origin": "*",
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
   }
   return config;
 });
@@ -31,7 +32,7 @@ axios.interceptors.response.use(
     if (error.response) {
       return Promise.reject(error.response.data);
     } else {
-      return Promise.reject(MSG.serverError);
+      return Promise.reject(ALERT_INFO.serverError);
     }
   }
 );

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="main-container">
-      <p class="main-container-hospital">郴州市第一人民医院</p>
+      <main-hospital hospitalName="郴州市第一人民医院"></main-hospital>
       <main-input
         class="main-container-input"
         type="text"
@@ -26,7 +26,11 @@
         :addressArrary="addressArrary"
         @onAddressClick="onAddressClick"
       ></main-address>
-      <textarea class="main-container-textArea" placeholder="请输入详细地址" v-model="detailAddress"></textarea>
+      <textarea
+        class="main-container-textArea"
+        placeholder="请输入详细地址"
+        v-model="detailAddress"
+      ></textarea>
       <button class="main-container-submit" @click="onSubmit">提 交</button>
       <van-popup v-model="showPicker" round position="bottom">
         <van-area
@@ -40,14 +44,16 @@
 </template>
 
 <script>
+import MainHospital from "@c/main-hospital.vue";
 import MainInput from "@c/main-input.vue";
 import MainAddress from "@c/main-address.vue";
 import CommonTool from "@js/commonTool.js";
 
 export default {
   components: {
+    MainHospital,
     MainInput,
-    MainAddress,
+    MainAddress
   },
 
   data() {
@@ -108,9 +114,9 @@ export default {
       );
     },
     hospitalInfoRequest() {
-      const uri = this.hospitalID;
+      const uri = `express/hospital/${this.hospitalID}`;
       this.$http
-        .post(uri)
+        .get(uri)
         .then((response) => {
           console.log(response.name);
         })
