@@ -53,7 +53,7 @@ export default {
   components: {
     MainHospital,
     MainInput,
-    MainAddress
+    MainAddress,
   },
 
   data() {
@@ -71,7 +71,9 @@ export default {
 
   created() {
     this.hospitalID = CommonTool.getURLData().id;
+    console.log(`hospitalID:${this.hospitalID}`);
     this.hospitalInfoRequest();
+    // this.test()
   },
 
   methods: {
@@ -113,8 +115,15 @@ export default {
         `deviceNO:${this.deviceNO};name:${this.name};telephone:${this.telephone};addressArray:${this.addressArrary};detailAddress:${this.detailAddress}`
       );
     },
-    hospitalInfoRequest() {
+    async test() {
       const uri = `express/hospital/${this.hospitalID}`;
+      let a = await fetch("https://cloud.bajiesleed.com/express/hospital/60eea99629fd55c94f7d5136");
+      console.log(a);
+    },
+    async hospitalInfoRequest() {
+      const uri = `express/hospital/${this.hospitalID}`;
+      // let a = await fetch(`${BASE_URL}${uri}`);
+      // console.log(a);
       this.$http
         .get(uri)
         .then((response) => {

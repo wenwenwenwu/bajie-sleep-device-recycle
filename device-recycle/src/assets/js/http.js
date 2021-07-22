@@ -8,10 +8,10 @@ axios.defaults.baseURL = BASE_URL;
 // 所有的request，都会先进入该方法
 axios.interceptors.request.use(config => {
   Toast.loading()
-  config.headers = {
-    "Access-Control-Allow-Origin": "*",
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  }
+  // config.headers = {
+  //   "Access-Control-Allow-Origin": "*",
+  //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  // }
   return config;
 });
 
